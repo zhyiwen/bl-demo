@@ -1,0 +1,33 @@
+@import '_color';
+.theme-bg{
+  background-color: $theme-color !important;
+  color: #fff !important;
+  .van-nav-bar__title{
+    color: inherit;
+  }
+}
+.van-tabbar-item--active{
+  color: $theme-color !important;
+}
+
+html,body{
+  height: 100%;
+}
+.box{height: 100%;}
+.van-nav-bar--fixed ~ .content {
+  padding-top: 46px;
+}
+.van-tabbar--fixed ~ .content {
+  padding-bottom: 50px;
+}
+.content {
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: $bg-color;
+}
+.van-nav-bar.theme-bg{
+  &::after{
+    border: none;
+  }
+}
