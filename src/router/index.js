@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import Msg from '../views/Msg.vue'
+import Index from '../views/Index.vue'
+// import Home from '../views/Home.vue'
+// import Msg from '../views/Msg.vue'
 import '../scss/style.scss'
 
 Vue.use(VueRouter)
@@ -10,17 +11,12 @@ const routes = [
   {
     path: "/",
     name: "main",
-    redirect: "/home"
+    redirect: "/index"
   },
   {
-    path: "/home",
-    name: "home",
-    component: Home
-  },
-  {
-    path: "/msg",
-    name: "msg",
-    component: Msg
+    path: "/index",
+    name: "index",
+    component: Index
   }
 ];
 
