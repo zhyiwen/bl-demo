@@ -8,7 +8,7 @@
   .van-icon {
     color: inherit !important;
   }
-  .van-nav-bar__text{
+  .van-nav-bar__text {
     color: inherit !important;
   }
 }
@@ -35,4 +35,39 @@ body {
   box-sizing: border-box;
   background-color: $bg-color;
   overflow-y: auto;
+}
+@font-face {
+  font-family: myFirstFont;
+  src: url("../assets/fonts/ds-digital-webfont.ttf"), url("../assets/fonts/ds-digital-webfont.eot"); /* IE9+ */
+}
+
+// 综合展示
+.link-cont {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  .van-grid {
+    .van-icon {
+      color: $theme-color;
+    }
+  }
+}
+.base-cont {
+  padding: 10px;
+  .base-text {
+    margin: 0;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  .base-num {
+    color: $theme-color;
+    font-family: myFirstFont;
+    font-size: 25px;
+  }
+  .van-grid-item__content{
+    padding: 8px;
+  }
+}
+.chart-cont{
+
 }

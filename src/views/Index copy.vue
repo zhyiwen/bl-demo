@@ -17,10 +17,10 @@
         </van-row>
       </div>
       <info-box title="资产状态">
-        <div id="echarts_1" style="width:100%; height:200px"></div>
+        <div id="echarts_1" style="height:200px"></div>
       </info-box>
       <info-box title="资产类型">
-        <div id="echarts_2" style="width:100%; height:200px"></div>
+        <div id="echarts_2" style="height:200px"></div>
       </info-box>
     </div>
   </div>

@@ -17,17 +17,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$theme-color: #006f6c;
-$bg-color:#ededef;
+@import "../scss/_color";
 .info-box {
   background: #fff;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   padding: 10px;
   .info-hd{
     position: relative;
     font-size: 0.9rem;
     color: #444;
     padding-left: 12px;
+    font-weight: bold;
     &::before{
       content: '';
       position: absolute;
