@@ -9,7 +9,8 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 
 Vue.config.productionTip = false
-Vue.use(Vant, vueAxios, axios, VueResource);
+Vue.use(Vant, VueResource);
+Vue.use(vueAxios, axios);
 
 new Vue({
   router,

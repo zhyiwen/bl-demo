@@ -64,10 +64,94 @@ body {
     font-family: myFirstFont;
     font-size: 25px;
   }
-  .van-grid-item__content{
+  .van-grid-item__content {
     padding: 8px;
   }
 }
-.chart-cont{
+.chart-cont {
+}
 
+// 实时疫情
+.nCoV {
+  position: absolute;
+  background: linear-gradient(to bottom, $theme-color 5%, #fff 80%);
+  top: 46px;
+  right: 0;
+  bottom: 50px;
+  left: 0;
+  padding: 20px;
+}
+.data-cont {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  .data {
+    strong {
+      color: inherit;
+      display: block;
+      margin-bottom: 5px;
+      font-size: 16px;
+      text-align: center;
+    }
+    p {
+      display: block;
+      text-align: center;
+      margin: 0;
+      font-size: 13px;
+      color: #777;
+    }
+    span {
+      display: block;
+      text-align: center;
+      font-size: 10px;
+      color: #b8b8b8;
+      i {
+        font-style: normal;
+      }
+    }
+    &.orange {
+      color: #ff6034;
+      i {
+        color: #ff6034;
+      }
+    }
+    &.yellow {
+      color: #f9c054;
+      i {
+        color: #f9c054;
+      }
+    }
+    &.cyan {
+      color: #49acd4;
+      i {
+        color: #49acd4;
+      }
+    }
+    &.red {
+      color: #98041e;
+      i {
+        color: #98041e;
+      }
+    }
+    &.blue {
+      color: #6489b1;
+      i {
+        color: #6489b1;
+      }
+    }
+    &.green {
+      color: #0cdc9b;
+      i {
+        color: #0cdc9b;
+      }
+    }
+  }
+  .data-from {
+    margin: 0;
+    background: rgba($theme-color, 0.2);
+    border-top: 1px solid $theme-color;
+    font-size: 12px;
+    color: $theme-color;
+    padding: 3px 10px;
+  }
 }

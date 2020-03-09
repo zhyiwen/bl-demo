@@ -24,7 +24,11 @@
       <div v-if="tabActive == 0">
         <div class="link-cont">
           <van-grid :column-num="4" :border="false">
-            <van-grid-item icon="todo-list-o" text="待办工单" to="/workorderDetails" />
+            <van-grid-item
+              icon="todo-list-o"
+              text="待办工单"
+              to="/workorderDetails"
+            />
             <van-grid-item icon="friends-o" text="应急小组" to="/" />
             <van-grid-item icon="balance-list-o" text="钱款" to="/" />
             <van-grid-item icon="service-o" text="应急小修" to="/" />
@@ -60,7 +64,57 @@
           <div id="echarts_1" style="width:100%; height:200px;"></div>
         </info-box>
       </div>
-      <div v-else-if="tabActive == 1">实时疫情</div>
+      <div v-else-if="tabActive == 1">
+        <div class="nCoV">
+          <div class="data-cont">
+            <van-grid :column-num="3" :border="false">
+              <van-grid-item>
+                <div class="data orange">
+                  <strong>{{ncov.currentConfirmedCount}}</strong>
+                  <p>现存确诊</p>
+                  <span>较昨日 <i>{{ncov.currentConfirmedIncr}}</i></span>
+                </div>
+              </van-grid-item>
+              <van-grid-item>
+                <div class="data yellow">
+                  <strong>{{ncov.suspectedCount}}</strong>
+                  <p>现存疑似</p>
+                  <span>较昨日 <i>{{ncov.suspectedIncr}}</i></span>
+                </div>
+              </van-grid-item>
+              <van-grid-item>
+                <div class="data cyan">
+                  <strong>{{ncov.seriousCount}}</strong>
+                  <p>现存重症</p>
+                  <span>较昨日 <i>{{ncov.seriousIncr}}</i></span>
+                </div>
+              </van-grid-item>
+              <van-grid-item>
+                <div class="data red">
+                  <strong>{{ncov.confirmedCount}}</strong>
+                  <p>累计确诊</p>
+                  <span>较昨日 <i>{{ncov.confirmedIncr}}</i></span>
+                </div>
+              </van-grid-item>
+              <van-grid-item>
+                <div class="data blue">
+                  <strong>{{ncov.deadCount}}</strong>
+                  <p>累计死亡</p>
+                  <span>较昨日 <i>{{ncov.deadIncr}}</i></span>
+                </div>
+              </van-grid-item>
+              <van-grid-item>
+                <div class="data green">
+                  <strong>{{ncov.curedCount}}</strong>
+                  <p>累计治愈</p>
+                  <span>较昨日 <i>{{ncov.curedIncr}}</i></span>
+                </div>
+              </van-grid-item>
+            </van-grid>
+            <p class="data-from">数据来源：截至2020.3.9 15:43 | 来源：丁香园</p>
+          </div>
+        </div>
+      </div>
       <div v-else-if="tabActive == 2">消息</div>
       <div v-else-if="tabActive == 3">我的</div>
     </div>
@@ -74,25 +128,25 @@ export default {
   data() {
     return {
       tabActive: 0,
-      titleShow: "综合展示"
+      titleShow: "综合展示",
+      ncov: ""
     };
   },
   watch: {},
   mounted() {
     this.chart1();
-    console.log(this.axios)
-    this.axios.get('https://lab.isaaclin.cnhttps//lab.isaaclin.cn/nCoV/')
+    this.axios
+      .get("https://lab.isaaclin.cn/nCoV/api/overall")
       .then(response => {
-        let data = response.data.bpi
-        console.log(data)
+        var self = this;
+        self.ncov = response.data.results[0];
+        console.log(self.ncov);
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
-  created() {
-    
-  },
+  created() {},
   updated() {
     if (this.tabActive == 0) {
       this.titleShow = "综合展示";
@@ -157,7 +211,7 @@ export default {
           }
         ]
       });
-    },
+    }
   }
 };
 </script>
