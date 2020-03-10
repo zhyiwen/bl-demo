@@ -70,48 +70,60 @@
             <van-grid :column-num="3" :border="false">
               <van-grid-item>
                 <div class="data orange">
-                  <strong>{{ncov.currentConfirmedCount}}</strong>
+                  <strong>{{ ncov.currentConfirmedCount }}</strong>
                   <p>现存确诊</p>
-                  <span>较昨日 <i>{{ncov.currentConfirmedIncr}}</i></span>
+                  <span
+                    >较昨日 <i>{{ ncov.currentConfirmedIncr }}</i></span
+                  >
                 </div>
               </van-grid-item>
               <van-grid-item>
                 <div class="data yellow">
-                  <strong>{{ncov.suspectedCount}}</strong>
+                  <strong>{{ ncov.suspectedCount }}</strong>
                   <p>现存疑似</p>
-                  <span>较昨日 <i>{{ncov.suspectedIncr}}</i></span>
+                  <span
+                    >较昨日 <i>{{ ncov.suspectedIncr }}</i></span
+                  >
                 </div>
               </van-grid-item>
               <van-grid-item>
                 <div class="data cyan">
-                  <strong>{{ncov.seriousCount}}</strong>
+                  <strong>{{ ncov.seriousCount }}</strong>
                   <p>现存重症</p>
-                  <span>较昨日 <i>{{ncov.seriousIncr}}</i></span>
+                  <span
+                    >较昨日 <i>{{ ncov.seriousIncr }}</i></span
+                  >
                 </div>
               </van-grid-item>
               <van-grid-item>
                 <div class="data red">
-                  <strong>{{ncov.confirmedCount}}</strong>
+                  <strong>{{ ncov.confirmedCount }}</strong>
                   <p>累计确诊</p>
-                  <span>较昨日 <i>{{ncov.confirmedIncr}}</i></span>
+                  <span
+                    >较昨日 <i>{{ ncov.confirmedIncr }}</i></span
+                  >
                 </div>
               </van-grid-item>
               <van-grid-item>
                 <div class="data blue">
-                  <strong>{{ncov.deadCount}}</strong>
+                  <strong>{{ ncov.deadCount }}</strong>
                   <p>累计死亡</p>
-                  <span>较昨日 <i>{{ncov.deadIncr}}</i></span>
+                  <span
+                    >较昨日 <i>{{ ncov.deadIncr }}</i></span
+                  >
                 </div>
               </van-grid-item>
               <van-grid-item>
                 <div class="data green">
-                  <strong>{{ncov.curedCount}}</strong>
+                  <strong>{{ ncov.curedCount }}</strong>
                   <p>累计治愈</p>
-                  <span>较昨日 <i>{{ncov.curedIncr}}</i></span>
+                  <span
+                    >较昨日 <i>{{ ncov.curedIncr }}</i></span
+                  >
                 </div>
               </van-grid-item>
             </van-grid>
-            <p class="data-from">数据来源：截至2020.3.9 15:43 | 来源：丁香园</p>
+            <p class="data-from">数据来源：截至{{ date }} | 来源：丁香园</p>
           </div>
         </div>
       </div>
@@ -129,22 +141,56 @@ export default {
     return {
       tabActive: 0,
       titleShow: "综合展示",
-      ncov: ""
+      ncov: "",
+      date: "",
+      rumors: ""
     };
   },
   watch: {},
   mounted() {
     this.chart1();
-    this.axios
-      .get("https://lab.isaaclin.cn/nCoV/api/overall")
-      .then(response => {
+    // this.axios
+    //   .get("https://lab.isaaclin.cn/nCoV/api/overall")
+    //   .then(response => {
+    //     var self = this;
+    //     self.ncov = response.data.results[0];
+    //     self.date = self.getdate(self.ncov.updateTime);
+    //     // console.log(self.getdate(self.ncov.updateTime));
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+    // this.axios
+    //   .get("https://lab.isaaclin.cn/nCoV/api/rumors")
+    //   .then(response => {
+    //     var self = this;
+    //     self.rumors = response.data.results;
+    //     console.log(self.rumors);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+    let axios = this.axios
+    function getNcovOverall() {
+      return axios.get("https://lab.isaaclin.cn/nCoV/api/overall");
+    }
+
+    function getNcovRumors() {
+      return axios.get("https://lab.isaaclin.cn/nCoV/api/rumors");
+    }
+    axios.all([getNcovOverall(), getNcovRumors()])
+      .then(axios.spread(function(overall, rumors) {
         var self = this;
-        self.ncov = response.data.results[0];
+        self.ncov = overall.data.results[0];
+        self.date = self.getdate(self.ncov.updateTime);
+        self.rumors = rumors.data.results;
         console.log(self.ncov);
-      })
-      .catch(function(error) {
+        console.log(self.rumors);
+      }))
+      .catch(axios.spread(function(error) {
+        // 两个请求现在都执行完成
         console.log(error);
-      });
+      }))
   },
   created() {},
   updated() {
@@ -211,6 +257,21 @@ export default {
           }
         ]
       });
+    },
+    getdate(e) {
+      var now = new Date(e),
+        y = now.getFullYear(),
+        m = now.getMonth() + 1,
+        d = now.getDate();
+      return (
+        y +
+        "-" +
+        (m < 10 ? "0" + m : m) +
+        "-" +
+        (d < 10 ? "0" + d : d) +
+        " " +
+        now.toTimeString().substr(0, 8)
+      );
     }
   }
 };

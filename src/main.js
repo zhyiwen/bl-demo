@@ -10,6 +10,7 @@ import 'vant/lib/index.css'
 
 Vue.config.productionTip = false
 Vue.use(Vant, VueResource);
+axios.defaults.withCredentials = false;
 Vue.use(vueAxios, axios);
 
 new Vue({
