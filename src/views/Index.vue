@@ -127,7 +127,60 @@
           </div>
         </div>
       </div>
-      <div v-else-if="tabActive == 2">消息</div>
+      <div v-else-if="tabActive == 2">
+        <div class="msg-cont">
+          <van-pull-refresh
+            v-model="isLoading"
+            success-text="刷新成功"
+            @refresh="onRefresh"
+          >
+            <div class="msg-group">
+              <div class="msg-item van-row">
+                <div class="msg-img">
+                  <img
+                    src="https://img.alicdn.com/imgextra/i4/2590951958/O1CN01GHaJj41QKo4ky0KSi_!!2590951958.jpg"
+                    alt=""
+                  />
+                </div>
+                <div class="msg-text">
+                  <p class="msg-title">张译文</p>
+                  <p class="msg-desc">
+                    轻轻地，我走了。正如我轻轻地来。我挥一挥衣袖，不带走一片云彩。那河岸的金柳
+                  </p>
+                </div>
+              </div>
+              <div class="msg-item van-row">
+                <div class="msg-img">
+                  <img
+                    src="https://img.alicdn.com/imgextra/i4/2590951958/O1CN01GHaJj41QKo4ky0KSi_!!2590951958.jpg"
+                    alt=""
+                  />
+                </div>
+                <div class="msg-text">
+                  <p class="msg-title">张译文</p>
+                  <p class="msg-desc">
+                    轻轻地，我走了。正如我轻轻地来。我挥一挥衣袖，不带走一片云彩。那河岸的金柳
+                  </p>
+                </div>
+              </div>
+              <div class="msg-item van-row">
+                <div class="msg-img">
+                  <img
+                    src="https://img.alicdn.com/imgextra/i4/2590951958/O1CN01GHaJj41QKo4ky0KSi_!!2590951958.jpg"
+                    alt=""
+                  />
+                </div>
+                <div class="msg-text">
+                  <p class="msg-title">张译文</p>
+                  <p class="msg-desc">
+                    轻轻地，我走了。正如我轻轻地来。我挥一挥衣袖，不带走一片云彩。那河岸的金柳
+                  </p>
+                </div>
+              </div>
+            </div>
+          </van-pull-refresh>
+        </div>
+      </div>
       <div v-else-if="tabActive == 3">我的</div>
     </div>
   </div>
@@ -143,25 +196,26 @@ export default {
       titleShow: "综合展示",
       ncov: "",
       date: "",
-      rumors: ""
+      rumors: "",
+      isLoading: false
     };
   },
   watch: {},
   mounted() {
     this.chart1();
+    this.axios
+      .get("https://lab.isaaclin.cn/nCoV/api/overall")
+      .then(response => {
+        var self = this;
+        self.ncov = response.data.results[0];
+        self.date = self.getdate(self.ncov.updateTime);
+        // console.log(self.getdate(self.ncov.updateTime));
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     // this.axios
-    //   .get("https://lab.isaaclin.cn/nCoV/api/overall")
-    //   .then(response => {
-    //     var self = this;
-    //     self.ncov = response.data.results[0];
-    //     self.date = self.getdate(self.ncov.updateTime);
-    //     // console.log(self.getdate(self.ncov.updateTime));
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
-    // this.axios
-    //   .get("https://lab.isaaclin.cn/nCoV/api/rumors")
+    //   .get("https://lab.isaaclin.cn/nCoV/api/rumors?num=all")
     //   .then(response => {
     //     var self = this;
     //     self.rumors = response.data.results;
@@ -170,27 +224,27 @@ export default {
     //   .catch(function(error) {
     //     console.log(error);
     //   });
-    let axios = this.axios
-    function getNcovOverall() {
-      return axios.get("https://lab.isaaclin.cn/nCoV/api/overall");
-    }
+    // let axios = this.axios
+    // function getNcovOverall() {
+    //   return axios.get("https://lab.isaaclin.cn/nCoV/api/overall");
+    // }
 
-    function getNcovRumors() {
-      return axios.get("https://lab.isaaclin.cn/nCoV/api/rumors");
-    }
-    axios.all([getNcovOverall(), getNcovRumors()])
-      .then(axios.spread(function(overall, rumors) {
-        var self = this;
-        self.ncov = overall.data.results[0];
-        self.date = self.getdate(self.ncov.updateTime);
-        self.rumors = rumors.data.results;
-        console.log(self.ncov);
-        console.log(self.rumors);
-      }))
-      .catch(axios.spread(function(error) {
-        // 两个请求现在都执行完成
-        console.log(error);
-      }))
+    // function getNcovRumors() {
+    //   return axios.get("https://lab.isaaclin.cn/nCoV/api/rumors?num=all");
+    // }
+    // axios.all([getNcovOverall(), getNcovRumors()])
+    //   .then(axios.spread(function(overall, rumors) {
+    //     var self = this;
+    //     self.ncov = overall.data.results[0];
+    //     self.date = self.getdate(self.ncov.updateTime);
+    //     self.rumors = rumors.data.results;
+    //     console.log(self.ncov);
+    //     console.log(self.rumors);
+    //   }))
+    //   .catch(axios.spread(function(error) {
+    //     // 两个请求现在都执行完成
+    //     console.log(error);
+    //   }))
   },
   created() {},
   updated() {
@@ -272,6 +326,11 @@ export default {
         " " +
         now.toTimeString().substr(0, 8)
       );
+    },
+    onRefresh() {
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1000);
     }
   }
 };
