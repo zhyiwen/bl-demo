@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <van-nav-bar title="工单详情" left-arrow fixed />
+    <van-nav-bar title="工单详情" left-arrow fixed @click-left="back"/>
     <div class="content">
       <van-cell-group>
         <van-field label="姓名" v-model="formData.name" input-align="right" />
@@ -61,6 +61,9 @@ export default {
     },
     getDate(data) {
       this.formData.date = data;
+    },
+    back(){
+      window.history.go(-1);
     },
     submit() {
       console.log(this.formData);
