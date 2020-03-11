@@ -27,7 +27,7 @@
             <van-grid-item
               icon="todo-list-o"
               text="待办工单"
-              to="/workorderDetails"
+              to="/form"
             />
             <van-grid-item icon="friends-o" text="应急小组" to="/" />
             <van-grid-item icon="balance-list-o" text="钱款" to="/" />

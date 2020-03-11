@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <van-nav-bar title="工单详情" left-arrow fixed @click-left="back"/>
+    <van-nav-bar title="工单详情" left-arrow fixed @click-left="back" />
     <div class="content">
       <van-cell-group>
         <van-field label="姓名" v-model="formData.name" input-align="right" />
@@ -10,17 +10,26 @@
           input-align="right"
         />
         <bl-picker label="性别" :data="sexSelect" @getData="getSex"></bl-picker>
-        <van-cell center title="vip">
+        <van-cell center title="是否复工">
           <van-switch
             clearable
-            v-model="formData.vip"
+            v-model="formData.work"
             required
             input-align="right"
             size="20px"
           ></van-switch>
         </van-cell>
-        <bl-picker label="购买方式" :data="buySelect" @getData="getBuy"></bl-picker>
-        <bl-date-picker label="选择时间" placeholder="请选择时间" @getData="getDate"></bl-date-picker>
+        <bl-date-picker
+          label="复工时间"
+          placeholder="请选择时间"
+          @getData="getDate"
+        ></bl-date-picker>
+        <!-- <van-cell center title="体温">
+          <van-radio-group v-model="temperature" direction="horizontal">
+            <van-radio name="1">单选框 1</van-radio>
+            <van-radio name="2">单选框 2</van-radio>
+          </van-radio-group>
+        </van-cell> -->
       </van-cell-group>
       <div class="btn-cont">
         <van-button type="info" round block @click="submit">提交</van-button>
@@ -36,14 +45,13 @@ export default {
   data() {
     return {
       sexSelect: ["男", "女"],
-      buySelect: ["微信","支付宝","信用卡","云闪付"],
       formData: {
-        name: "张三",
+        name: "",
         number: "",
         sex: "",
-        vip: false,
-        buyType:"",
-        date:""
+        work: false,
+        date: "",
+        temperature: "1"
       }
     };
   },
@@ -56,13 +64,10 @@ export default {
     getSex(data) {
       this.formData.sex = data;
     },
-    getBuy(data) {
-      this.formData.buyType = data;
-    },
     getDate(data) {
       this.formData.date = data;
     },
-    back(){
+    back() {
       window.history.go(-1);
     },
     submit() {
