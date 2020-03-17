@@ -73,7 +73,7 @@
                   <strong>{{ ncov.currentConfirmedCount }}</strong>
                   <p>现存确诊</p>
                   <span
-                    >较昨日 <i>{{ ncov.currentConfirmedIncr }}</i></span
+                    >较昨日 <i>{{ sum(ncov.currentConfirmedIncr) }}</i></span
                   >
                 </div>
               </van-grid-item>
@@ -82,7 +82,7 @@
                   <strong>{{ ncov.suspectedCount }}</strong>
                   <p>现存疑似</p>
                   <span
-                    >较昨日 <i>{{ ncov.suspectedIncr }}</i></span
+                    >较昨日 <i>{{ sum(ncov.suspectedIncr) }}</i></span
                   >
                 </div>
               </van-grid-item>
@@ -91,7 +91,7 @@
                   <strong>{{ ncov.seriousCount }}</strong>
                   <p>现存重症</p>
                   <span
-                    >较昨日 <i>{{ ncov.seriousIncr }}</i></span
+                    >较昨日 <i>{{ sum(ncov.seriousIncr) }}</i></span
                   >
                 </div>
               </van-grid-item>
@@ -100,7 +100,7 @@
                   <strong>{{ ncov.confirmedCount }}</strong>
                   <p>累计确诊</p>
                   <span
-                    >较昨日 <i>{{ ncov.confirmedIncr }}</i></span
+                    >较昨日 <i>{{ sum(ncov.confirmedIncr) }}</i></span
                   >
                 </div>
               </van-grid-item>
@@ -109,7 +109,7 @@
                   <strong>{{ ncov.deadCount }}</strong>
                   <p>累计死亡</p>
                   <span
-                    >较昨日 <i>{{ ncov.deadIncr }}</i></span
+                    >较昨日 <i>{{ sum(ncov.deadIncr) }}</i></span
                   >
                 </div>
               </van-grid-item>
@@ -118,7 +118,7 @@
                   <strong>{{ ncov.curedCount }}</strong>
                   <p>累计治愈</p>
                   <span
-                    >较昨日 <i>{{ ncov.curedIncr }}</i></span
+                    >较昨日 <i>{{ sum(ncov.curedIncr) }}</i></span
                   >
                 </div>
               </van-grid-item>
@@ -331,6 +331,13 @@ export default {
       setTimeout(() => {
         this.isLoading = false;
       }, 1000);
+    },
+    sum(e){
+      if(e> 0){
+        return '+'+e
+      }else{
+        return e
+      }
     }
   }
 };
