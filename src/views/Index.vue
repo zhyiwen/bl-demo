@@ -24,11 +24,7 @@
       <div v-if="tabActive == 0">
         <div class="link-cont">
           <van-grid :column-num="4" :border="false">
-            <van-grid-item
-              icon="todo-list-o"
-              text="待办工单"
-              to="/form"
-            />
+            <van-grid-item icon="todo-list-o" text="待办工单" to="/form" />
             <van-grid-item icon="friends-o" text="应急小组" to="/" />
             <van-grid-item icon="balance-list-o" text="钱款" to="/" />
             <van-grid-item icon="service-o" text="应急小修" to="/" />
@@ -66,6 +62,11 @@
       </div>
       <div v-else-if="tabActive == 1">
         <div class="nCoV">
+          <div class="ncov-top">
+            <p class="title">
+              <img src="../assets/img/head_title.png" alt="" />
+            </p>
+          </div>
           <div class="data-cont">
             <van-grid :column-num="3" :border="false">
               <van-grid-item>
@@ -201,51 +202,6 @@ export default {
     };
   },
   watch: {},
-  mounted() {
-    this.chart1();
-    this.axios
-      .get("https://lab.isaaclin.cn/nCoV/api/overall")
-      .then(response => {
-        var self = this;
-        self.ncov = response.data.results[0];
-        self.date = self.getdate(self.ncov.updateTime);
-        // console.log(self.getdate(self.ncov.updateTime));
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    // this.axios
-    //   .get("https://lab.isaaclin.cn/nCoV/api/rumors?num=all")
-    //   .then(response => {
-    //     var self = this;
-    //     self.rumors = response.data.results;
-    //     console.log(self.rumors);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
-    // let axios = this.axios
-    // function getNcovOverall() {
-    //   return axios.get("https://lab.isaaclin.cn/nCoV/api/overall");
-    // }
-
-    // function getNcovRumors() {
-    //   return axios.get("https://lab.isaaclin.cn/nCoV/api/rumors?num=all");
-    // }
-    // axios.all([getNcovOverall(), getNcovRumors()])
-    //   .then(axios.spread(function(overall, rumors) {
-    //     var self = this;
-    //     self.ncov = overall.data.results[0];
-    //     self.date = self.getdate(self.ncov.updateTime);
-    //     self.rumors = rumors.data.results;
-    //     console.log(self.ncov);
-    //     console.log(self.rumors);
-    //   }))
-    //   .catch(axios.spread(function(error) {
-    //     // 两个请求现在都执行完成
-    //     console.log(error);
-    //   }))
-  },
   created() {},
   updated() {
     if (this.tabActive == 0) {
@@ -332,13 +288,67 @@ export default {
         this.isLoading = false;
       }, 1000);
     },
-    sum(e){
-      if(e> 0){
-        return '+'+e
-      }else{
-        return e
+    sum(e) {
+      if (e > 0) {
+        return "+" + e;
+      } else {
+        return e;
       }
     }
+  },
+  mounted() {
+    this.chart1();
+    // this.axios
+    //   .get("https://lab.isaaclin.cn/nCoV/api/overall")
+    //   .then(response => {
+    //     var self = this;
+    //     self.ncov = response.data.results[0];
+    //     self.date = self.getdate(self.ncov.updateTime);
+    //     console.log(self.ncov);
+    //     // console.log(self.getdate(self.ncov.updateTime));
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+    // this.axios
+    //   .get("https://lab.isaaclin.cn/nCoV/api/rumors?num=all")
+    //   .then(response => {
+    //     var self = this;
+    //     self.rumors = response.data.results;
+    //     console.log(self.rumors);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+    let axios = this.axios;
+
+    let ApiUrl = "https://lab.isaaclin.cn/nCoV";
+
+    function getNcovOverall() {
+      return axios.get(ApiUrl + "/api/overall");
+    }
+
+    function getNcovRumors() {
+      return axios.get(ApiUrl + "/api/rumors?num=all");
+    }
+
+    axios.all([getNcovOverall(), getNcovRumors()])
+      .then(
+        axios.spread(function(overall, rumors) {
+          var self = this;
+          self.ncov = overall.data.results[0];
+          self.date = self.getdate(self.ncov.updateTime);
+          self.rumors = rumors.data.results;
+          console.log(overall.data);
+          console.log(rumors.data);
+        })
+      )
+      .catch(
+        axios.spread(function(error) {
+          // 两个请求现在都执行完成
+          console.log(error);
+        })
+      );
   }
 };
 </script>
