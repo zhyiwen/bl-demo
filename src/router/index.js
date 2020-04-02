@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Login from '../views/Login.vue'
 import Index from '../views/Index.vue'
 import Form from '../views/Form.vue'
 // import Home from '../views/Home.vue'
@@ -12,7 +13,12 @@ const routes = [
   {
     path: "/",
     name: "main",
-    redirect: "/index"
+    redirect: "/login"
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login
   },
   {
     path: "/index",

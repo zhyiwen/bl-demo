@@ -7,6 +7,8 @@ import axios from 'axios'
 // import VueResource from 'vue-resource'
 import Vant from 'vant'
 import 'vant/lib/index.css'
+import htmlToPdf from './assets/js/htmlToPdf';
+
 
 Vue.config.productionTip = false
 Vue.use(Vant);
@@ -14,6 +16,7 @@ Vue.use(Vant);
 Vue.use(vueAxios, axios);
 axios.defaults.withCredentials = false;
 // Vue.prototype.$axios = axios;
+Vue.use(htmlToPdf);
 
 new Vue({
   router,

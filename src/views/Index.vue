@@ -299,22 +299,35 @@ export default {
   mounted() {
     this.chart1();
     // 疫情统计
-    // this.axios
-    //   .get("https://lab.isaaclin.cn/nCoV/api/overall")
-    //   .then(response => {
-    //     var self = this;
-    //     self.ncov = response.data.results[0];
-    //     self.date = self.getdate(self.ncov.updateTime);
-    //     console.log(self.ncov);
-    //     // console.log(self.getdate(self.ncov.updateTime));
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+    this.axios
+      .get("https://lab.isaaclin.cn/nCoV/api/overall",{
+        headers: {
+          'Accept': "application/json",
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        withCredentials: false,
+        timeOut: 1000
+      })
+      .then(response => {
+        var self = this;
+        self.ncov = response.data.results[0];
+        self.date = self.getdate(self.ncov.updateTime);
+        console.log(self.ncov);
+        // console.log(self.getdate(self.ncov.updateTime));
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
 
     // 谣言
     // this.axios
-    //   .get("https://lab.isaaclin.cn/nCoV/api/rumors?num=all")
+    //   .get("https://lab.isaaclin.cn/nCoV/api/rumors?num=all",{
+    //     headers: {
+    //       'Accept': "application/json",
+    //       "Content-Type": "application/json;charset=utf-8"
+    //     },
+    //     withCredentials: false
+    //   })
     //   .then(response => {
     //     var self = this;
     //     self.rumors = response.data.results;
@@ -324,48 +337,48 @@ export default {
     //     console.log(error);
     //   });
 
-    let axios = this.axios;
+    // let axios = this.axios;
 
-    let ApiUrl = "https://lab.isaaclin.cn/nCoV";
+    // let ApiUrl = "https://lab.isaaclin.cn/nCoV";
 
-    function getNcovOverall() {
-      return axios.get(ApiUrl + "/api/overall", {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=utf-8"
-        },
-        withCredentials: false
-      });
-    }
+    // function getNcovOverall() {
+    //   return axios.get(ApiUrl + "/api/overall", {
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json;charset=utf-8"
+    //     },
+    //     withCredentials: false
+    //   });
+    // }
 
-    function getNcovRumors() {
-      return axios.get(ApiUrl + "/api/rumors?num=all", {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json;charset=utf-8"
-        },
-        withCredentials: false
-      });
-    }
+    // function getNcovRumors() {
+    //   return axios.get(ApiUrl + "/api/rumors?num=all", {
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json;charset=utf-8"
+    //     },
+    //     withCredentials: false
+    //   });
+    // }
 
-    axios
-      .all([getNcovOverall(), getNcovRumors()])
-      .then(
-        axios.spread(function(overall, rumors) {
-          var self = this;
-          self.ncov = overall.data.results[0];
-          self.date = self.getdate(self.ncov.updateTime);
-          self.rumors = rumors.data.results;
-          console.log(overall.data);
-          console.log(rumors.data);
-        })
-      )
-      .catch(
-        axios.spread(function(error) {
-          // 两个请求现在都执行完成
-          console.log(error);
-        })
-      );
+    // axios
+    //   .all([getNcovOverall(), getNcovRumors()])
+    //   .then(
+    //     axios.spread(function(overall, rumors) {
+    //       var self = this;
+    //       self.ncov = overall.data.results[0];
+    //       self.date = self.getdate(self.ncov.updateTime);
+    //       self.rumors = rumors.data.results;
+    //       console.log(overall.data);
+    //       console.log(rumors.data);
+    //     })
+    //   )
+    //   .catch(
+    //     axios.spread(function(error) {
+    //       // 两个请求现在都执行完成
+    //       console.log(error);
+    //     })
+    //   );
   }
 };
 </script>

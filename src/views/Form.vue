@@ -1,8 +1,8 @@
 <template>
   <div class="box">
-    <van-nav-bar title="工单详情" left-arrow fixed @click-left="back" />
+    <van-nav-bar title="工单详情" left-arrow fixed @click-left="back" right-text="打印" @click-right="getPdf('testfile')"/>
     <div class="content">
-      <van-cell-group>
+      <van-cell-group id="pdfDom">
         <van-field label="姓名" v-model="formData.name" input-align="right" />
         <van-field
           label="身份证号"

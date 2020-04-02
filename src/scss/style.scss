@@ -235,3 +235,19 @@ body {
 .btn-cont {
   margin: 10px 10px 0;
 }
+
+
+// 登录页
+.login{
+  background-image: url(../assets/img/login-bg.png);
+  background-size: cover;
+  background-position: center center;
+  .logo-cont{
+    text-align: center;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    img{
+      width: 160px;
+    }
+  }
+}
