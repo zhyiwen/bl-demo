@@ -298,6 +298,7 @@ export default {
   },
   mounted() {
     this.chart1();
+    // 疫情统计
     // this.axios
     //   .get("https://lab.isaaclin.cn/nCoV/api/overall")
     //   .then(response => {
@@ -310,6 +311,8 @@ export default {
     //   .catch(function(error) {
     //     console.log(error);
     //   });
+
+    // 谣言
     // this.axios
     //   .get("https://lab.isaaclin.cn/nCoV/api/rumors?num=all")
     //   .then(response => {
@@ -320,19 +323,33 @@ export default {
     //   .catch(function(error) {
     //     console.log(error);
     //   });
+
     let axios = this.axios;
 
     let ApiUrl = "https://lab.isaaclin.cn/nCoV";
 
     function getNcovOverall() {
-      return axios.get(ApiUrl + "/api/overall");
+      return axios.get(ApiUrl + "/api/overall", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        withCredentials: false
+      });
     }
 
     function getNcovRumors() {
-      return axios.get(ApiUrl + "/api/rumors?num=all");
+      return axios.get(ApiUrl + "/api/rumors?num=all", {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        withCredentials: false
+      });
     }
 
-    axios.all([getNcovOverall(), getNcovRumors()])
+    axios
+      .all([getNcovOverall(), getNcovRumors()])
       .then(
         axios.spread(function(overall, rumors) {
           var self = this;
