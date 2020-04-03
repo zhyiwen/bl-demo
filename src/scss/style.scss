@@ -250,4 +250,27 @@ body {
       width: 160px;
     }
   }
+  .form-cont{
+    padding: 0 40px;
+  }
+}
+.input-group{
+  position: relative;
+  margin-bottom: 30px;
+  input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #b8b8b8;
+    padding: 8px 15px;
+    padding-left: 35px;
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    background-color: transparent;
+  }
+  .input-icon{
+    position: absolute;
+    color: #2f83ff;
+    top: 10px;
+    left: 10px;
+  }
 }
