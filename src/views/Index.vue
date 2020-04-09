@@ -188,6 +188,7 @@
 </template>
 
 <script>
+import "echarts/theme/macarons.js";
 import InfoBox from "@/components/InfoBox";
 export default {
   name: "index",
@@ -198,7 +199,7 @@ export default {
       ncov: "",
       date: "",
       rumors: "",
-      isLoading: false
+      isLoading: false,
     };
   },
   watch: {},
@@ -215,24 +216,27 @@ export default {
     }
   },
   components: {
-    InfoBox
+    InfoBox,
   },
   methods: {
     chart1() {
       var echarts = require("echarts");
       // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("echarts_1"));
+      var myChart = echarts.init(
+        document.getElementById("echarts_1"),
+        "macarons"
+      );
       // 绘制图表
       myChart.setOption({
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b}: {c} ({d}%)"
+          formatter: "{a} <br/>{b}: {c} ({d}%)",
         },
         legend: {
           orient: "vertical",
           left: 10,
           top: "center",
-          data: ["已巡查", "未巡查"]
+          data: ["已巡查", "未巡查"],
         },
         color: ["#4395ff", "#d8d8d8"],
         series: [
@@ -245,27 +249,27 @@ export default {
             label: {
               normal: {
                 show: false,
-                position: "center"
+                position: "center",
               },
               emphasis: {
                 show: true,
                 textStyle: {
                   fontSize: "30",
-                  fontWeight: "bold"
-                }
-              }
+                  fontWeight: "bold",
+                },
+              },
             },
             labelLine: {
               normal: {
-                show: false
-              }
+                show: false,
+              },
             },
             data: [
               { value: 135, name: "已巡查" },
-              { value: 310, name: "未巡查" }
-            ]
-          }
-        ]
+              { value: 310, name: "未巡查" },
+            ],
+          },
+        ],
       });
     },
     getdate(e) {
@@ -294,21 +298,21 @@ export default {
       } else {
         return e;
       }
-    }
+    },
   },
   mounted() {
     this.chart1();
     // 疫情统计
     this.axios
-      .get("https://lab.isaaclin.cn/nCoV/api/overall",{
+      .get("https://lab.isaaclin.cn/nCoV/api/overall", {
         headers: {
-          'Accept': "application/json",
-          "Content-Type": "application/json;charset=utf-8"
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=utf-8",
         },
         withCredentials: false,
-        timeOut: 1000
+        timeOut: 1000,
       })
-      .then(response => {
+      .then((response) => {
         var self = this;
         self.ncov = response.data.results[0];
         self.date = self.getdate(self.ncov.updateTime);
@@ -379,8 +383,169 @@ export default {
     //       console.log(error);
     //     })
     //   );
-  }
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@import "../scss/_color";
+// 实时疫情
+.nCoV {
+  position: absolute;
+  // background: linear-gradient(to bottom, $theme-color 5%, #fff 80%);
+  background: #fff;
+  top: 46px;
+  right: 0;
+  bottom: 50px;
+  left: 0;
+}
+.ncov-top {
+  height: 40.8vw;
+  background-size: cover;
+  position: relative;
+  .title {
+    text-align: center;
+    margin: 0;
+    position: absolute;
+    width: 50%;
+    left: 25%;
+    top: 40px;
+    img {
+      width: 100%;
+    }
+  }
+  &::before {
+    content: "";
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    height: 48.533vw;
+    background: url(../assets/img/head_bg_new.png) top;
+    background-size: cover;
+  }
+}
+.data-cont {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  .data {
+    strong {
+      color: inherit;
+      display: block;
+      margin-bottom: 5px;
+      font-size: 16px;
+      text-align: center;
+    }
+    p {
+      display: block;
+      text-align: center;
+      margin: 0;
+      font-size: 13px;
+      color: #777;
+    }
+    span {
+      display: block;
+      text-align: center;
+      font-size: 10px;
+      color: #b8b8b8;
+      i {
+        font-style: normal;
+      }
+    }
+    &.orange {
+      color: #ff6034;
+      i {
+        color: #ff6034;
+      }
+    }
+    &.yellow {
+      color: #f9c054;
+      i {
+        color: #f9c054;
+      }
+    }
+    &.cyan {
+      color: #49acd4;
+      i {
+        color: #49acd4;
+      }
+    }
+    &.red {
+      color: #98041e;
+      i {
+        color: #98041e;
+      }
+    }
+    &.blue {
+      color: #6489b1;
+      i {
+        color: #6489b1;
+      }
+    }
+    &.green {
+      color: #0cdc9b;
+      i {
+        color: #0cdc9b;
+      }
+    }
+  }
+  .data-from {
+    margin: 0;
+    background: rgba($theme-color, 0.2);
+    border-top: 1px solid $theme-color;
+    font-size: 12px;
+    color: $theme-color;
+    padding: 3px 10px;
+  }
+}
+
+// 消息
+.msg-item {
+  background: #fff;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  box-sizing: border-box;
+  .msg-img {
+    float: left;
+    width: 46px;
+    height: 46px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .msg-text {
+    float: left;
+    padding-left: 10px;
+    width: calc(100% - 48px);
+    box-sizing: border-box;
+    .msg-title {
+      margin: 0;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 28px;
+      color: #444;
+    }
+    .msg-desc {
+      margin: 0;
+      color: #777;
+      font-size: 12px;
+      width: 100%;
+      text-overflow: ellipsis;
+      word-break: keep-all;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+}
+</style>

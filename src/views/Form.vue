@@ -76,3 +76,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.btn-cont {
+  margin: 10px 10px 0;
+}
+</style>
